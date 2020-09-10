@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>函数节流</title>
+</head>
+<body>
+  <button id="btn">点我节流</button>
+</body>
+<script src="./throttle.js"></script>
+<script>
+  window.onload = function () {
+    var btn = document.getElementById('btn')
+    btn.addEventListener('click', throttle4(executeThrottle, 1000))
+
+    // function throttle (fn) {
+    //   let canRun = true
+    //   return function () {
+    //     if (!canRun) return;
+    //     canRun = false
+    //     setTimeout( () => {
+    //       fn.call(this, arguments)
+    //       canRun = true
+    //     }, 1000)
+    //   }
+    // }
+
+    function executeThrottle () {
+      console.log('节流成功')
+    }
+  }
+</script>
+</html>
