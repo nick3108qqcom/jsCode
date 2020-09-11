@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    img {
+      width: 100%;
+      height: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <img data-src="https://cdn.suisuijiang.com/ImageMessage/5adad39555703565e79040fa_1590657907683.jpeg">
+    <img data-src="https://cdn.suisuijiang.com/ImageMessage/5adad39555703565e79040fa_1590657913523.jpeg">
+    <img data-src="https://cdn.suisuijiang.com/ImageMessage/5adad39555703565e79040fa_1590657925550.jpeg">
+    <img data-src="https://cdn.suisuijiang.com/ImageMessage/5adad39555703565e79040fa_1590657930289.jpeg">
+    <img data-src="https://cdn.suisuijiang.com/ImageMessage/5adad39555703565e79040fa_1590657934750.jpeg">
+    <img data-src="https://cdn.suisuijiang.com/ImageMessage/5adad39555703565e79040fa_1590657918315.jpeg">
+  </div>
+  <script>
+    const imgs = [...document.getElementsByTagName('img')]
+
+    if (IntersectionObserver) {
+      let lazyLoadObsever = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry, index) => {
+          let loadImg = entry.target;
+          console.log(entry.intersectionRatio)
+          // If intersectionRatio is 0, the target is out of view
+          if (entry.intersectionRatio > 0) {
+            loadImg.src = loadImg.getAttribute('data-src')
+            lazyLoadObsever.unobserve(loadImg)
+          }
+        })
+      })
+
+      for (let i = 0; i < imgs.length; i++) {
+        lazyLoadObsever.observe(imgs[i])
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>
