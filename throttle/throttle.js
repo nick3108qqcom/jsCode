@@ -1,16 +1,29 @@
-function throttle(fn, interval = 400) {
-  let isCan = true
+// function throttle(fn, interval = 400) {
+//   let isCan = true
+//   return function () {
+//     console.log(isCan)
+//     if (isCan) {
+//       isCan = false
+//       setTimeout(() => {
+//         fn.call(this, arguments)
+//         isCan = true
+//       }, interval);
+//     }
+//   }
+// }
+
+function throttle(fn, wait = 400) {
+  let isCan = true;
   return function () {
-    console.log(isCan)
     if (isCan) {
-      isCan = false
+      isCan = false;
       setTimeout(() => {
         fn.call(this, arguments)
         isCan = true
-      }, interval);
+      }, wait);
     }
   }
-}
+};
 
 // 第一次立即触发，最后一次不会触发
 function thrrottle2(fn, wait = 400) {
@@ -51,6 +64,21 @@ function throttle4(fn, wait = 400) {
         fn.call(this, arguments)
         clearTimeout(timer)
         timer = null
+      }, wait);
+    }
+  }
+}
+
+
+
+function throttle_my(fn, wait) {
+  let isCan = true
+  return function () {
+    if (isCan) {
+      isCan = false
+      setTimeout(() => {
+        isCan = true
+        fn.call(this, arguments)
       }, wait);
     }
   }
