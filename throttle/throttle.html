@@ -15,7 +15,8 @@
     var btn = document.getElementById('btn')
     btn.addEventListener('click', throttle_my(executeThrottle, 1000))
 
-    function executeThrottle () {
+    function executeThrottle (e) {
+      console.log(this)
       console.log('节流成功')
     }
   }

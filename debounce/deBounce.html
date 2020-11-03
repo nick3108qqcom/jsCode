@@ -16,6 +16,7 @@
     btn.addEventListener('click', debounce(executeDebounce, 300))
 
     function executeDebounce () {
+      console.log(this)
       console.log('防抖成功')
     }
   }  

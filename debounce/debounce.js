@@ -34,8 +34,9 @@ function db(fn, wait = 400, immediate = false) {
 function debounce(fn, wait = 400) {
   let timer = null;
   return function () {
-    console.log(timer)
     clearTimeout(timer)
-    timer = setTimeout(fn, wait)
+    timer = setTimeout(() => {
+      fn.call(this, arguments)
+    }, wait)
   }
 }
