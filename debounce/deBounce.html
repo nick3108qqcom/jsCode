@@ -13,7 +13,7 @@
 <script>
   window.onload = function () {
     var btn = document.getElementById("btn")
-    btn.addEventListener('click', db(executeDebounce, 300))
+    btn.addEventListener('click', debounce(executeDebounce, 300))
 
     function executeDebounce () {
       console.log('防抖成功')
