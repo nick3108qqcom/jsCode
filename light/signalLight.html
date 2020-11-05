@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /**
+     * 实现一个红绿灯
+     * 红灯2秒，黄灯1秒，绿灯3秒
+     * 参考链接：https://github.com/funnycoderstar/blog/issues/110
+     **/
+    function sleep(duration) {
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, duration);
+      })
+    }
+
+    async function changeColor(color, duration) {
+      console.log('当前颜色', color)
+      await sleep(duration)
+    }
+
+    async function main() {
+      await changeColor('红色', 2000)
+      await changeColor('黄色', 1000)
+      await changeColor('绿色', 3000)
+    }
+
+    main()
+  </script>
+</body>
+
+</html>
