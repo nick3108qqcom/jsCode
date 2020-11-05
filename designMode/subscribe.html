@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /**
+     * 订阅发布模式
+     **/
+    var Event = (function () {
+      var clientList = [],
+        listen,
+        trigger,
+        remove;
+
+      listen = function (key, fn) {
+        if (!clientList[key]) {
+          clientList[key] = []
+        }
+        clientList[key].push(fn)
+      };
+
+      trigger = function (key) {
+        console.log(clientList)
+        Array.prototype.shift.call(arguments);
+        var fns = clientList[key];
+        if (!fns || fns.length == 0) {
+          return false;
+        } else {
+          for (let i = 0, fn; fn = fns[i++];) {
+            fn.call(this, arguments)
+          }
+        }
+      };
+
+      remove = function (key, fn) {
+        var fns = clientList[key];
+      };
+
+      return {
+        listen,
+        trigger,
+        remove
+      }
+    })()
+
+    Event.listen('setName', () => {
+      console.log('ly')
+    })
+
+    Event.trigger('setName')
+  </script>
+  <script>
+    /**
+     * 参考文章 https://zhuanlan.zhihu.com/p/183126447
+     * VUE 中实现发布/订阅 event Hub
+     *  
+     **/
+    // const eventHub = new Vue();
+    // const topic = {
+    //   publish(eventName, ...args) {
+    //     eventHub.$emit(eventName, ...args)
+    //   },
+
+    //   subscribe(eventName, listener) {
+    //     eventHub.$on(eventName, listener)
+    //   },
+
+    //   off(eventName) {
+    //     eventHub.$off(eventName)
+    //   }
+    // }
+
+    /**
+     * js 发布/订阅模式
+     * 
+     **/
+    const subscribers = {}
+
+    function subscribe(eventName, callback) {
+      if (!subscribers[eventName]) {
+        subscribers[eventName] = []
+      }
+      // 寻找到下标，用于删除
+      const index = subscribers[eventName].length;
+      subscribers[eventName].push(callback)
+      return () => {
+        subscribers[eventName].splice(index, 1)
+      }
+    }
+
+    function publish(eventName, ...args) {
+      if (!subscribers[eventName] || subscribers[eventName].length == 0) {
+        return false;
+      }
+      console.log(args)
+      subscribers[eventName].forEach(v => {
+        v.call(this, args);
+      })
+    }
+
+    var a = subscribe('price', function (...args) {
+      console.log(args)
+    })
+
+    publish('price', {
+      type: 'update',
+      value: {
+        name: 'ly'
+      }
+    })
+
+  </script>
+</body>
+
+</html>

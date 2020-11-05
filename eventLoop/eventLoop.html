@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /**
+     * js 事件循环
+     * 参考链接：https://zhuanlan.zhihu.com/p/33058983
+     * 1. javascript事单线程，非阻塞
+     * 2. 浏览器 事件循环
+     *    a.执行栈： 同步代码的执行，按照顺序添加到执行栈中
+     *    b.事件队列： 异步代码的执行。根据异步事件的类型，这个事件会被放到宏任务或者微任务中
+     *    在当前执行栈为空的时候，主线程会查看微任务队列，是否有事件，如果没有再去宏任务队列查看
+     *      i.宏任务 :setInterval()，setTimeout()
+     *      ii.微任务:new Promise()，new MutaionObserver()
+     * 3. node事件循环
+     *  
+    */
+    const p = function () {
+      return new Promise((resolve, reject) => {
+        const p1 = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(1)
+          }, 0)
+          resolve(2)
+        })
+        p1.then((res) => {
+          console.log(res);
+        })
+        console.log(3);
+        resolve(4);
+      })
+    }
+
+    p().then((res) => {
+      console.log(res);
+    })
+    console.log('end');
+
+    // 2
+    // end
+    // 3
+    // 4
+
+
+
+    /**
+     * node环境下的事件循环
+     * v8引擎作为js的解释器，v8将js代码分析后去调用对应的node api,最后这些api由libuv引擎驱动
+     * libuv引擎，node中事件循环的实现依靠的事libuv引擎
+     *
+     * 1. timer阶段，执行定时器队列中的回调，如setTimeout(), setInterval()
+     * 2. I/O callback阶段，这个阶段执行几乎所有的回调，但是不包括close事件，定时器和 setImmediate()的回调
+     * 3. idle,prepare阶段，这个阶段仅在内部使用，不用理会
+     * 4. poll阶段：等待新的I/O事件，node在一些特殊情况下会阻塞这里
+     * 5. check: setImmediate()的回调在这个阶段执行
+     * 6. close callbacks: 列入socket.on('close', ...) 这种事件的回调
+     *
+     **/
+  </script>
+</body>
+
+</html>
