@@ -95,6 +95,7 @@
       }
     }
 
+    
     function publish(eventName, ...args) {
       if (!subscribers[eventName] || subscribers[eventName].length == 0) {
         return false;
