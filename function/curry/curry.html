@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    /**
+     * 函数柯里化
+     * 
+     * 优点：参数复用，提前返回，延迟执行 
+     * **/
+    function curry(fn, ...args) {
+      // 函数的参数个数可以通过函数的.length属性获得
+      return (
+        args.length >= fn.length
+          ? fn(...args)
+          : (..._args) => curry(fn, ...args, ..._args)
+      )
+    }
+   
+    function sum1(a, b, c) {
+      return a + b + c
+    }
+    var sumCurry = curry(sum1)
+    var sum2 = sumCurry(1, 2)
+    console.log(sum2)
+    console.log(sum2(5))
+
+    
+  </script>
+</body>
+
+</html>
