@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  function createElement(type, props, childrens) {
+    let ref, key;
+    if (ref in props) {
+      ref = props['ref'];
+      props['ref'] = null;
+    }
+
+    if (key in props) {
+      key = props['key'];
+      props['key'] = null;
+    }
+
+    return {
+      key,
+      ref,
+      type,
+      props: {
+        ...props,
+        children: childrens.length > 1 ? childrens : childrens[0]
+      }
+    }
+  }
+
+  // 把虚拟 dom 插入页面中
+  function render(vDom, container) {
+    let { type, props } = vDom;
+    let domElement = document.createElement(type);
+    for (let key in props) {
+      if (!props.hasOwnProperty(key)) break;
+      let value = props[key];
+      if (value === null || value === undefined) continue;
+
+      switch (key.toUpperCase()) {
+        case 'ID':
+          domElement.setAttribute('id', value)
+          break;
+        case 'CLASSNAME':
+          domElement.setAttribute('class', value)
+          break;
+        case 'STYLE':
+          for (let styleItem in value) {
+            domElement['style'][styleItem] = value[styleItem];
+          }
+          break;
+        case 'CHILDREN':
+          !(value instanceof Array) ? value = [value] : null
+          value.forEach(item => {
+            if (typeof item === 'string') {
+              domElement.appendChild(document.createTextNode(item))
+            } else {
+              render(value, domElement)
+            }
+          })
+          break;
+        default:
+          domElement.setAttribute(key, value)
+          break;
+      }
+    }
+    document.querySelector(container).appendChild(domElement)
+  }
+
+  var vDom = createElement(
+    'h1',
+    {
+      classname: 'title',
+      style: { color: 'red', }
+    },
+    'hello'
+  )
+  render(vDom, '#app')
+</script>
+
+</html>
