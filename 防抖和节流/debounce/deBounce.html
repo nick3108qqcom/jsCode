@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>函数防抖</title>
 </head>
+
 <body>
   <button id="btn">防抖</button>
 </body>
@@ -15,10 +17,12 @@
     var btn = document.getElementById("btn")
     btn.addEventListener('click', debounce(executeDebounce, 300))
 
-    function executeDebounce () {
+    function executeDebounce(e) {
+      console.log(e)
       console.log(this)
       console.log('防抖成功')
     }
   }  
 </script>
+
 </html>
