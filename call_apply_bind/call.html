@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    Function.prototype.myCall = function (_this) {
+      _this = _this || window
+      _this.fn = this
+      var params = Array.from(arguments).slice(1)
+      var res = _this.fn(...params)
+      delete _this.fn
+      return res
+    }
+
+    function foo() {
+      console.log(this.name)
+    }
+
+    var obj = {
+      name: 'obj name'
+    }
+
+    foo.myCall(obj)
+  </script>
+</body>
+
+</html>
