@@ -1,7 +1,6 @@
-
 function debounce(fn, wait = 400) {
   let timer = null;
-  return function () {
+  return function() {
     clearTimeout(timer)
     timer = setTimeout(() => {
       fn.call(this, ...arguments)
@@ -14,13 +13,16 @@ function debounce(fn, wait = 400) {
  */
 function debounceImmediately(fn, wait = 400, immediate = false) {
   let timer = null;
-  return function () {
+  return function() {
     clearTimeout(timer)
     if (immediate && !timer) {
       fn.call(this, ...arguments)
+      immediate = false
+    } else {
+      timer = setTimeout(() => {
+        fn.call(this, ...arguments)
+      }, wait);
     }
-    timer = setTimeout(() => {
-      fn.call(this, ...arguments)
-    }, wait);
+
   }
 }
