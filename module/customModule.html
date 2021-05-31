@@ -52,7 +52,7 @@
       }
     })
 
-    module.define('lesson', ['arr'], function (arrModule) {
+    module.define('lesson', ['arr'], function (arrModule)  {
       const data = [
         { name: 'js', price: 199, },
         { name: 'mysql', price: 198 },
@@ -66,6 +66,14 @@
     // 因为模块间会有依赖关系，在处理模块时，全部解析模块后，会进行加载
     // 模块模式遵循严格模式
     
+    // 具名导出
+    // 默认导出，只能有一个
+    // 混合导出
+    // 小技巧：合并导出，再一个文件中把需要的模块导入，然后再导出
+
+    // 按需动态加载模块 import('xxx.js').then(result => {})
+
+
 
   </script>
 </body>
