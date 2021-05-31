@@ -5,20 +5,68 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title></title>
 </head>
 
 <body>
   <script>
-    let module = (function () {
-      function define(name, modules, fn) {
+    
+    // 功能拆分
+    // 命名冲突
 
+    // AMD require.js
+    // CMD 
+    // commonjs
+    // umd 指出 cmd和commonjs
+
+    
+    // 自定义模块管理
+    // 定义模块，模块间依赖
+    let module = (function () {
+      const moduleList = {}
+      function define(name, modules, action) {
+
+        // 解决依赖
+        modules.map((v, i) => {
+          return modules[i] = moduleList[v]
+        })
+
+        // 放入执行结果
+        // 传入依赖模块
+        moduleList[name] = action.apply(null, modules)
+        // console.log(moduleList)
       }
 
       return { define }
     })()
 
+    module.define('arr', [], function () {
+      return {
+        first: function (arr) {
+          return arr[0]
+        },
+
+        max: function (arr, key) {
+          return arr.sort((a, b) => b[key] - a[key])[0]
+        }
+      }
+    })
+
+    module.define('lesson', ['arr'], function (arrModule) {
+      const data = [
+        { name: 'js', price: 199, },
+        { name: 'mysql', price: 198 },
+      ]
+      const max = arrModule.max(data, 'price')
+      console.log(max)
+    })
+
+    //  es6 模块 
+    // script type="module"
+    // 因为模块间会有依赖关系，在处理模块时，全部解析模块后，会进行加载
+    // 模块模式遵循严格模式
     
+
   </script>
 </body>
 
