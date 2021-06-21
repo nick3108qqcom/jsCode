@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./exactSetTimeout.js"></script>
+  <script>
+    // setTime()
+    var proSymbol = Symbol('host')
+    class User {
+      constructor() {
+        this[proSymbol] = 'baidu.com'
+      }
+
+      set host(val) {
+        this[proSymbol] = val
+      }
+
+      get host() {
+        return this[proSymbol]
+      }
+    }
+
+    var u1 = new User()
+    u1.host = 'www'
+    console.log(u1[Symbol('host')])
+  </script>
+</body>
+
+</html>
